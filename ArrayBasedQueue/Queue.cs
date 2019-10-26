@@ -20,7 +20,7 @@ namespace ArrayBasedQueue
         {
             if(size >= capacity)
             {
-                Resize(size * 2);
+                Resize(capacity * 2);
             }
             tail %= capacity;//mod size (tail?) to wrap
             data[tail] = value;
@@ -50,7 +50,7 @@ namespace ArrayBasedQueue
         public void Resize(int Size)// resizing capacity 
         {
             T[] temp = new T[Size];
-             //move over, don't move blanks between tail and head
+            //transfer data to temp
             data = temp;
         }
 
@@ -65,7 +65,10 @@ namespace ArrayBasedQueue
 
         public void Clear()
         {
-
+            head = 0;
+            tail = 0;
+            size = 0;
+            Resize(10);
         }
     }
 }
