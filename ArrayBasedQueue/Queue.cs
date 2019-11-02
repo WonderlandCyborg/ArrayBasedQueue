@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ArrayBasedQueue
 {
-    class Queue<T>
+    public class Queue<T>
     {
         public int Count { get; private set; }
         private T[] data = new T[10];
@@ -22,7 +22,7 @@ namespace ArrayBasedQueue
             {
                 Resize(capacity * 2);
             }
-            tail %= capacity;//mod size (tail?) to wrap
+            tail %= capacity;
             data[tail] = value;
             tail++;
             size++;
@@ -30,12 +30,7 @@ namespace ArrayBasedQueue
 
         public T Dequeue()
         {
-            
-            if (size <= capacity/4)
-            {
-                Resize(size / 2);
-            }
-            head %= capacity;//mod size (head?) to wrap
+            head %= capacity;
             T deq = data[head]; 
             head++;
             size--;                       
@@ -47,11 +42,17 @@ namespace ArrayBasedQueue
             return data[head];
         }
 
-        public void Resize(int Size)// resizing capacity 
+        public void Resize(int Size)
         {
             T[] temp = new T[Size];
-            //transfer data to temp
+            for (int x = 0; x < capacity; x++)
+            {
+                temp[x] = data[(head + x)%capacity];
+            }
             data = temp;
+            head = 0;
+            tail = size;
+            capacity = Size;
         }
 
         public bool IsEmpty()
